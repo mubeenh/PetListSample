@@ -1,0 +1,31 @@
+﻿@model PetFinder.Models.PetsViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<h3>Cats grouped by owner's gender:</h3>
+<hr />
+
+@{
+    // hardcoding to Cat for now.. can be used to change view based on user input
+    var grp = Model.GetPetsGroupedByOwnerGender("Cat");
+}
+
+@if (grp == null || grp.Count == 0)
+{
+    <div class="alert alert-info" role="alert">Sorry, there seem to be no cats out there!</div>
+}
+else
+{
+    foreach (var k in grp)
+    {
+        <h3>@k.Key</h3>
+
+        foreach (var v in k.Value.OrderBy(e => e.Name))
+        {
+            <ul>@v.Name</ul>
+        }
+    }
+}
