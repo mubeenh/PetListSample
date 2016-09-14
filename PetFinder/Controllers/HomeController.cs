@@ -1,4 +1,5 @@
-﻿using PetFinder.Models;
+﻿using PetFinder.Common;
+using PetFinder.Models;
 using PetFinder.Service;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace PetFinder.Controllers
         public HomeController()
         {
             // DI would be nice but for now this should do :)
-            PetFinderService = new PetFinderService();
+            PetFinderService = new PetFinderService(new WebClientFactory());
         }
 
         [HandleError]

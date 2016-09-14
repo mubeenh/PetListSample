@@ -13,7 +13,7 @@ namespace PetFinderTests
 
         public PetsViewModelTests()
         {
-            _service = new PetFinderService();
+            _service = new PetFinderService(new MockWebClientFactory());
         }
 
         [TestMethod]

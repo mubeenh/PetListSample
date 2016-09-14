@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PetFinder.Common;
 using PetFinder.Models;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,18 @@ namespace PetFinder.Service
     public class PetFinderService
     {
         private readonly static string PEOPLE_SERVICE = ConfigurationManager.AppSettings["PEOPLE_SERVICE"];
+        private IWebClientFactory _wcFactory;
+
+        public PetFinderService(IWebClientFactory wcFactory)
+        {
+            _wcFactory = wcFactory;
+        }
 
         public List<Person> GetPeople()
         {
             var response = "";
 
-            using (WebClient wc = new WebClient())
+            using (IWebClient wc = _wcFactory.CreatInstance())
             {
                 // fetch json from service
                 response = wc.DownloadString(PEOPLE_SERVICE);

@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PetFinder.Service;
 using PetFinder.Models;
 using System.Linq;
+using PetFinder.Common;
 
 namespace PetFinderTests
 {
@@ -16,18 +17,27 @@ namespace PetFinderTests
     {
         private PetFinderService _service;
 
-        public PetFinderServiceTests()
-        {
-            _service = new PetFinderService();
-        }
-
         [TestMethod]
-        public void TestGetPeople()
+        public void TestGetPeopleUsingService()
         {
+            _service = new PetFinderService(new WebClientFactory());
+
             List<Person> people = _service.GetPeople();
 
             Assert.IsNotNull(people);
             Assert.IsTrue(people.Count > 0);
         }
+
+        [TestMethod]
+        public void TestGetPeopleUsingMockData()
+        {
+            _service = new PetFinderService(new MockWebClientFactory());
+
+            List<Person> people = _service.GetPeople();
+
+            Assert.IsNotNull(people);
+            Assert.IsTrue(people.Count > 0);
+        }
+
     }
 }
